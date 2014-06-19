@@ -1,4 +1,4 @@
-// Палиндром
+// РџР°Р»РёРЅРґСЂРѕРј
 #include <stdio.h>
 #include <stdlib.h>
 
