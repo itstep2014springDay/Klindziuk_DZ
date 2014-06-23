@@ -1,4 +1,4 @@
-// Изгнание мух
+// РР·РіРЅР°РЅРёРµ РјСѓС…
 #include <stdio.h>
 #include <stdlib.h>
 

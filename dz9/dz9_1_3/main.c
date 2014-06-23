@@ -1,4 +1,4 @@
-// Сказка квест
+// РЎРєР°Р·РєР° РєРІРµСЃС‚
 #include <stdio.h>
 #include <stdlib.h>
 

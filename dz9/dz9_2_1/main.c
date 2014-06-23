@@ -1,4 +1,4 @@
-// Ёлочка
+// РЃР»РѕС‡РєР°
 #include <stdio.h>
 #include <stdlib.h>
 
