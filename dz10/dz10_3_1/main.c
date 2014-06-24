@@ -1,3 +1,4 @@
+// Действия с 3-мя чслами
 #include <stdio.h>
 #include <stdlib.h>
 
