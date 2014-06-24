@@ -1,3 +1,4 @@
+// Процент денег в банке
 #include <stdio.h>
 #include <stdlib.h>
 
