@@ -9,7 +9,14 @@ int main()
     scanf("%lf",&x);
     a=0.0;
     fa=a*a-x;
-    b=x;
+    if (x<=1)
+    {
+        b=1;
+    }
+    else
+    {
+        b=x;
+    }
     fb=b*b-x;
     do
     {
