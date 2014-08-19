@@ -5,8 +5,8 @@
 int main()
 {
     const int n=1024;
-    unsigned char memory[1024],current;
-    int top=0;
+    unsigned char memory[n],current;
+    int head=0;
     for (int i=0; i<n; ++i)
         memory[i]=0;
     printf("Enter code\n");
@@ -16,19 +16,19 @@ int main()
         switch (current)
         {
         case '+':
-            ++memory[top];
+            ++memory[head];
             break;
         case '-':
-            --memory[top];
+            --memory[head];
             break;
         case '>':
-            ++top;
+            ++head;
             break;
         case '<':
-            --top;
+            --head;
             break;
         case '.':
-            putchar(memory[top]);
+            putchar(memory[head]);
             break;
         }
     }
