@@ -98,7 +98,6 @@ void sortBubbleArray(int array[],int size)
 
 void sortInsertionArray(int array[],int size)
 {
-    array[0];
     for (int i=0; i<size-1; ++i)
     {
         int j=i;
@@ -109,6 +108,49 @@ void sortInsertionArray(int array[],int size)
             array[j]=array[j+1];
             array[j+1]=temp;
             --j;
+        }
+    }
+}
+
+void sortMergeArray(int ar[],int l,int r)
+{
+    if (l<r)
+    {
+        sortMergeArray(ar,l,(r+l)/2);
+        sortMergeArray(ar,(r+l)/2+1,r);
+        const int sizeMax=1024;
+        //static int br[sizeMax],cr[sizeMax];  // всё равно не работает эта константа, в ".h" и в static
+        static int br[1024],cr[1024];
+        for (int i=l; i<=(r+l)/2; ++i)
+            br[i]=ar[i];
+        for (int i=(r+l)/2+1; i<=r; ++i)
+            cr[i]=ar[i];
+        int i=l,j=l,k=(r+l)/2+1;
+        while (j<=(r+l)/2 && k<=r)
+        {
+            if (br[j]<cr[k])
+            {
+                ar[i]=br[j];
+                ++j;
+            }
+            else
+            {
+                ar[i]=cr[k];
+                ++k;
+            }
+            ++i;
+        }
+        while (j<=(r+l)/2)
+        {
+            ar[i]=br[j];
+            ++j;
+            ++i;
+        }
+        while (k<=r)
+        {
+            ar[i]=cr[k];
+            ++k;
+            ++i;
         }
     }
 }
