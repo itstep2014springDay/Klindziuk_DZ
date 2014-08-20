@@ -4,7 +4,7 @@
 
 int main()
 {
-    const int n=1024;
+    const int n=3000;
     unsigned char memory[n],programm[n],current;
     int head=0,top=-1,oldTop,i,sizeProg,stack[n];
     for (i=0; i<n; ++i)
@@ -18,11 +18,6 @@ int main()
     }
     while (programm[i-1]!='\n');
     sizeProg=i-1;
-    /*
-        printf("\n");
-        for (i=0; i<size;++i)
-            printf("%c",programm[i]);
-    */
     i=0;
     do
     {
@@ -54,12 +49,13 @@ int main()
             ++i;
             break;
         case '[':
-            if (memory[head]!='0')
+            if (memory[head]!=0)
             {
-                ++head;
+                //++head;
+                stack[++top]=i;
                 ++i;
             }
-            else // не получается прикрутить в этот else cтек
+            else
             {
                 oldTop=top;
                 do
@@ -75,21 +71,22 @@ int main()
                         --top;
                         ++i;
                         break;
+                    default:
+                        ++i;
                     }
                 }
                 while (top!=oldTop);
-                i=stack[top]+1;
+                //i=stack[top]+1;
             }
             break;
         case ']':
-            if (memory[head]='0')
+            if (memory[head]==0)
             {
-                ++head;
+                //++head;
                 ++i;
             }
             else
             {
-                // и в этот тоже
                 i=stack[top]+1;
             }
             break;
