@@ -10,6 +10,9 @@ int searchMaxInArray(int array[],int size);
 void sortSelectionArray(int array[],int size);
 void sortBubbleArray(int array[],int size);
 void sortInsertionArray(int array[],int size);
-void sortMergeArray(int ar[],int l,int r);
+void sortMergeArray(int array[],int sizeArray);
+void sortHeapArray(int array[],int sizeArray);
+void sortQuickArray(int array[],int sizeArray);
+void copyArrayAinB(int arrayA[],int arrayB[], int sizeArray);
 
 #endif // ARRAYEXT_H_INCLUDED

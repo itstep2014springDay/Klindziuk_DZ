@@ -1,53 +1,63 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "../mylib/arrayext.h"
 
 int main()
 {
-    const int n=10;
+    srand(time(NULL));
+    const int n=15;
     int a[n],temp[n];
-    /*
-        temp[0]=5;
-        temp[1]=2;
-        temp[2]=7;
-        temp[3]=9;
-        temp[4]=3;
-        temp[5]=2;
-        temp[6]=1;
-        temp[7]=8;
-        temp[8]=6;
-        temp[9]=4;
-    */
+
     generateArray(a,n,0,20);
 
-    printf("\nSelection sort\n");
-    for(int i=0; i<10; ++i)
-        temp[i]=a[i];
+    printf("\n1. Selection sort\n");
+    printf("Source array:\n");
+    copyArrayAinB(a,temp,n);
     outputArray(temp,n);
     sortSelectionArray(temp,n);
+    printf("Sorted array:\n");
     outputArray(temp,n);
 
-    printf("\nBubble sort\n");
-    for(int i=0; i<10; ++i)
-        temp[i]=a[i];
+    printf("\n2. Bubble sort\n");
+    printf("Source array:\n");
+    copyArrayAinB(a,temp,n);
     outputArray(temp,n);
     sortBubbleArray(temp,n);
+    printf("Sorted array:\n");
     outputArray(temp,n);
 
-    printf("\nInsertion sort\n");
-    for(int i=0; i<10; ++i)
-        temp[i]=a[i];
+    printf("\n3. Insertion sort\n");
+    printf("Source array:\n");
+    copyArrayAinB(a,temp,n);
     outputArray(temp,n);
     sortInsertionArray(temp,n);
+    printf("Sorted array:\n");
     outputArray(temp,n);
 
-    printf("\nMerge sort\n");
-    for(int i=0; i<10; ++i)
-        temp[i]=a[i];
+    printf("\n4. Merge sort\n");
+    printf("Source array:\n");
+    copyArrayAinB(a,temp,n);
     outputArray(temp,n);
-    sortMergeArray(temp,0,n-1);
+    sortMergeArray(temp,n);
+    printf("Sorted array:\n");
     outputArray(temp,n);
 
+    printf("\n5. Heap sort\n");
+    printf("Source array:\n");
+    copyArrayAinB(a,temp,n);
+    outputArray(temp,n);
+    sortHeapArray(temp,n);
+    printf("Sorted array:\n");
+    outputArray(temp,n);
+
+    printf("\n6. Quick sort\n");
+    printf("Source array:\n");
+    copyArrayAinB(a,temp,n);
+    outputArray(temp,n);
+    sortQuickArray(temp,n);
+    printf("Sorted array:\n");
+    outputArray(temp,n);
 
     return 0;
 }
