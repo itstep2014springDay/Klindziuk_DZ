@@ -46,12 +46,12 @@ int main()
             break;
         case ',':
             memory[head]=getchar();
+            getchar();
             ++i;
             break;
         case '[':
             if (memory[head]!=0)
             {
-                //++head;
                 stack[++top]=i;
                 ++i;
             }
@@ -76,7 +76,6 @@ int main()
                     }
                 }
                 while (top!=oldTop);
-                //i=stack[top]+1;
             }
             break;
         case ']':
@@ -84,10 +83,11 @@ int main()
             {
                 //++head;
                 ++i;
+                --top;
             }
             else
             {
-                i=stack[top]+1;
+                i=stack[top--];
             }
             break;
         }
