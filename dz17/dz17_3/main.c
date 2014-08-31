@@ -81,7 +81,6 @@ int main()
         case ']':
             if (memory[head]==0)
             {
-                //++head;
                 ++i;
                 --top;
             }
