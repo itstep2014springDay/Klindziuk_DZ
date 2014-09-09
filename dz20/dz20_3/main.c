@@ -1,3 +1,4 @@
+
 // решение уравнения методом деления отрезка пополам
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +28,7 @@ double quadraticEquation(double x)
 int main()
 {
     double x;
-    x=dichotomia(0.0,2.5,quadraticEquation(???));  // что сюда передавать?
+    x=dichotomia(0.0,2.5,quadraticEquation);
     printf("X=%f",x);
     return 0;
 }
