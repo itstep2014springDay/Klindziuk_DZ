@@ -1,4 +1,3 @@
-
 // решение уравнения методом деления отрезка пополам
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +11,8 @@ double dichotomia(double a, double b, double(*f)(double))
     while (b-a>eps)
     {
         double m=(a+b)/2.0;
+        if(f(m)==0.0)
+            return m;
         if(f(a)*f(m)<0.0)
             b=m;
         else
