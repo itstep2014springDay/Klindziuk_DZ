@@ -9,27 +9,28 @@ void push(int *stack, int size, int *top, int datum)
     stack[++(*top)]=datum;
 }
 
-void pop(int *stack, int *top, int datum)
+void pop(int top)
 {
-   datum=stack[(*top)--];
+   top--;
 }
 
-void onTop(int *stack, int *top, int datum)
+int onTop(int *stack, int top)
 {
-   datum=stack[(*top)];
+if (top<0)
+    return -1;
+   return stack[top];
 }
 
-void isEmpty(int *top)
+int  isEmpty(int top)
 {
-   *top=-1;
+   return top=-1;
 }
 
 int main()
 {
-    int *stack=NULL,*top,size=100,datum;
+    int *stack=NULL,top=-1,size=100,datum;
     stack=(int*)malloc(size*sizeof(int*));
-    int start=-1;
-    top=&start;
+
 
 
     free(stack);
