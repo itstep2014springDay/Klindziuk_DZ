@@ -9,9 +9,9 @@ void push(int *stack, int size, int *top, int datum)
     stack[++(*top)]=datum;
 }
 
-void pop(int top)
+void pop(int *top)
 {
-   top--;
+   *top--;
 }
 
 int onTop(int *stack, int top)
