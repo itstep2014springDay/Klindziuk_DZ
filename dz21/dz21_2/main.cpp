@@ -47,30 +47,52 @@ bool isEmpty(Node *top)
 int main()
 {
     unsigned char current;
-    bool noError=false;
-    Node *p=NULL;
-    p=new Node;
+    bool error=false;
+    Node *top=NULL;
     printf("Enter code\n");
     do
     {
         current=getchar();
-        if (current=='(' && onTop(p)==-1)
-            push(&p, current);
-        if (current==')' && onTop(p)=='(')
-            pop(&p);
-
-
-
-
-
-
-
+        switch (current)
+        {
+        case '(':
+            push(&top, current);
+            break;
+        case ')':
+            if (onTop(top)=='(')
+                pop(&top);
+            else
+                error=true;
+            break;
+        case '[':
+            push(&top, current);
+            break;
+        case ']':
+            if (onTop(top)=='[')
+                pop(&top);
+            else
+                error=true;
+            break;
+        case '{':
+            push(&top, current);
+            break;
+        case '}':
+            if (onTop(top)=='{')
+                pop(&top);
+            else
+                error=true;
+            break;
+        }
+        if (error)
+            break;
     }
     while (current!='\n');
-    if (noError)
-        printf("No errors");
-    else
+    if (!isEmpty(top))
+        error=true;
+    if (error)
         printf("Error!");
-    delete p;
+    else
+        printf("No errors");
+    delete top;
     return 0;
 }
