@@ -1,0 +1,7 @@
+q: Is it huge?
+q: is it "human friend"?
+q: Can it fly?
+a: cat
+a: eagle
+a: dog
+a: elephant
