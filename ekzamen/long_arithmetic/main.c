@@ -136,57 +136,69 @@ void swapAB(myLongType a, myLongType b)
 int main()
 {
     myLongType a,b,c;
-    /*
-    printf("A= ");
-    readLong(a);
-    printf("B= ");
-    readLong(b);
+    printf("Choise mode\nPress '1' - work with console\nPress '2' - work with files\nMode: ");
+    int mode;
+    scanf("%d",&mode);
+    fflush(stdin);
+    //char mode=gets();
+    if (mode==2) // режим работы с файлами
+    {
+        FILE *inputFile,*outputFile;
+        inputFile=fopen("input.txt","r");
+        outputFile=fopen("output.txt","w");
+        readLong(inputFile,a);
+        readLong(inputFile,b);
+        fprintf(outputFile,"A= ");
+        writeLong(outputFile,a);
+        fprintf(outputFile,"B= ");
+        writeLong(outputFile,b);
 
-    printf("Sum\n");
-    printf("C= ");
-    sumLong(a,b,c);
-    writeLong(c);
+        fprintf(outputFile,"A+B= ");
+        sumLong(a,b,c);
+        writeLong(outputFile,c);
 
-    printf("Mylti\n");
-    printf("C= ");
-    multiLong(a,b,c);
-    writeLong(c);
-    */
-    FILE *inputFile,*outputFile;
-    inputFile=fopen("input.txt","r");
-    outputFile=fopen("output.txt","w");
-    /*
-        printf("A= ");
-        readLong(a);
-        printf("B= ");
-        readLong(b);
-    */
-    //readLong(stdin,a);
-    readLong(inputFile,a);
-    //readLong(stdin,b);
-    readLong(inputFile,b);
-    //writeLong(a);
-    //writeLong(b);
+        fprintf(outputFile,"A-B= ");
+        if (!moreAB(a,b)) // костыль для вывода отицательных чисел
+        {
+            swapAB(a,b);
+            fprintf(outputFile,"-");
+        }
+        subLong(a,b,0,c);
+        writeLong(outputFile,c);
+        fprintf(outputFile,"A*B= ");
+        multiLong(a,b,c);
+        writeLong(outputFile,c);
 
-    //printf("Sum\n");
-    //printf("C= ");
+        fclose(outputFile);
+        fclose(inputFile);
+        fprintf(stdout,"Done. See \"output.txt\"\n");
+    }
+    else // режим работы с консолью в другом случае
+    {
+        fprintf(stdout,"A= ");
+        readLong(stdin,a);
+        fprintf(stdout,"B= ");
+        readLong(stdin,b);
 
+        //writeLong(stdout,a);
 
-    writeLong(stdout,a);
-    writeLong(stdout,b);
-    subLong(a,b,0,c);
-    writeLong(stdout,c);
-    //writeLong(outputFile,c);
+        //writeLong(stdout,b);
 
-    /*
-        if (moreAB(a,b))
-            writeLong(stdout,a);
-        else
-            writeLong(stdout,b);
-    */
+        fprintf(stdout,"A+B= ");
+        sumLong(a,b,c);
+        writeLong(stdout,c);
 
-
-    fclose(outputFile);
-    fclose(inputFile);
+        fprintf(stdout,"A-B= ");
+        if (!moreAB(a,b)) // костыль для вывода отицательных чисел
+        {
+            swapAB(a,b);
+            fprintf(stdout,"-");
+        }
+        subLong(a,b,0,c);
+        writeLong(stdout,c);
+        fprintf(stdout,"A*B= ");
+        multiLong(a,b,c);
+        writeLong(stdout,c);
+    }
     return 0;
 }
