@@ -81,6 +81,58 @@ void multiLong(const myLongType a, const myLongType b, myLongType c)
         --c[0];
 }
 
+int moreAB(const myLongType a, const myLongType b)
+{
+    if (a[0]<b[0])
+        return 0;
+    if (a[0]>b[0])
+        return 1;
+    int i=a[0];
+    while (i>0 && a[i]==b[i])
+        --i;
+    if (i==0)
+        return 0;
+    if (a[i]>b[i])
+        return 1;
+    return 0;
+}
+
+void subLong(const myLongType a, const myLongType b,int sp, myLongType c)
+{
+    memset(c,0,sizeof(myLongType));
+    for (int i=0; i<=a[0]; ++i)
+        c[i]=a[i];
+    for (int i=1; i<=b[0]; ++i)
+    {
+        c[i+sp]=c[i+sp]-b[i];
+        int j=i;
+        while (c[j+sp]<0 && j<=c[0])
+        {
+            c[j+sp]=c[j+sp]+BASE;
+            --c[j+sp+1];
+            ++j;
+        }
+    }
+    int i=c[0];
+    while (i>1 && c[i]==0)
+        --i;
+    c[0]=i;
+}
+
+void swapAB(myLongType a, myLongType b)
+{
+    myLongType temp;
+    memset(temp,0,sizeof(myLongType));
+    for (int i=0; i<=a[0]; ++i)
+        temp[i]=a[i];
+    memset(a,0,sizeof(myLongType));
+    for (int i=0; i<=b[0]; ++i)
+        a[i]=b[i];
+    memset(b,0,sizeof(myLongType));
+    for (int i=0; i<=temp[0]; ++i)
+        b[i]=temp[i];
+}
+
 int main()
 {
     myLongType a,b,c;
@@ -103,12 +155,12 @@ int main()
     FILE *inputFile,*outputFile;
     inputFile=fopen("input.txt","r");
     outputFile=fopen("output.txt","w");
-/*
-    printf("A= ");
-    readLong(a);
-    printf("B= ");
-    readLong(b);
-*/
+    /*
+        printf("A= ");
+        readLong(a);
+        printf("B= ");
+        readLong(b);
+    */
     //readLong(stdin,a);
     readLong(inputFile,a);
     //readLong(stdin,b);
@@ -118,9 +170,20 @@ int main()
 
     //printf("Sum\n");
     //printf("C= ");
-    sumLong(a,b,c);
-    //writeLong(stdout,c);
-    writeLong(outputFile,c);
+
+
+    writeLong(stdout,a);
+    writeLong(stdout,b);
+    subLong(a,b,0,c);
+    writeLong(stdout,c);
+    //writeLong(outputFile,c);
+
+    /*
+        if (moreAB(a,b))
+            writeLong(stdout,a);
+        else
+            writeLong(stdout,b);
+    */
 
 
     fclose(outputFile);
