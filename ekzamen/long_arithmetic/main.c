@@ -8,10 +8,10 @@
 
 typedef int myLongType[MAXDIGITS];
 
-void readLong(myLongType a)
+void readLong(FILE *inputFile, myLongType a)
 {
     memset(a,0,sizeof(myLongType));
-    char current=getchar();
+    char current=fgetc(inputFile);
     while (current!='\n')
     {
         for (int i=a[0]; i>=1; --i)
@@ -22,16 +22,16 @@ void readLong(myLongType a)
         a[1]=a[1]+current-'0';
         if (a[a[0]+1]>0)
             ++a[0];
-        current=getchar();
+        current=fgetc(inputFile);
     }
 }
 
-void writeLong(const myLongType a)
+void writeLong(FILE *outputFile, const myLongType a)
 {
     //char ls[10],s[10];
     char ls[(int) log10(MAXDIGITS)],s[(int) log10(MAXDIGITS)];
     sprintf(ls,"%d",BASE/10);  // itoa() почему-то не работал
-    printf("%d",a[a[0]]);
+    fprintf(outputFile,"%d",a[a[0]]);
     for(int i=a[0]-1; i>=1; --i)
     {
         sprintf(s,"%d",a[i]);
@@ -41,9 +41,9 @@ void writeLong(const myLongType a)
             strcat(tmpStr,s);
             strcpy(s,tmpStr);
         }
-        printf("%s",s);
+        fprintf(outputFile,"%s",s);
     }
-    printf("\n");
+    fprintf(outputFile,"\n");
 }
 
 void sumLong(const myLongType a, const myLongType b, myLongType c)
@@ -84,6 +84,7 @@ void multiLong(const myLongType a, const myLongType b, myLongType c)
 int main()
 {
     myLongType a,b,c;
+    /*
     printf("A= ");
     readLong(a);
     printf("B= ");
@@ -98,6 +99,31 @@ int main()
     printf("C= ");
     multiLong(a,b,c);
     writeLong(c);
+    */
+    FILE *inputFile,*outputFile;
+    inputFile=fopen("input.txt","r");
+    outputFile=fopen("output.txt","w");
+/*
+    printf("A= ");
+    readLong(a);
+    printf("B= ");
+    readLong(b);
+*/
+    //readLong(stdin,a);
+    readLong(inputFile,a);
+    //readLong(stdin,b);
+    readLong(inputFile,b);
+    //writeLong(a);
+    //writeLong(b);
 
+    //printf("Sum\n");
+    //printf("C= ");
+    sumLong(a,b,c);
+    //writeLong(stdout,c);
+    writeLong(outputFile,c);
+
+
+    fclose(outputFile);
+    fclose(inputFile);
     return 0;
 }
