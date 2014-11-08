@@ -30,7 +30,7 @@ void writeLong(const myLongType a)
 {
     //char ls[10],s[10];
     char ls[(int) log10(MAXDIGITS)],s[(int) log10(MAXDIGITS)];
-    sprintf(ls,"%d",BASE/10);
+    sprintf(ls,"%d",BASE/10);  // itoa() почему-то не работал
     printf("%d",a[a[0]]);
     for(int i=a[0]-1; i>=1; --i)
     {
@@ -65,6 +65,22 @@ void sumLong(const myLongType a, const myLongType b, myLongType c)
         c[0]=k+1;
 }
 
+void multiLong(const myLongType a, const myLongType b, myLongType c)
+{
+    memset(c,0,sizeof(myLongType));
+    for (int i=1; i<=a[0]; ++i)
+        for (int j=1; j<=b[0]; ++j)
+        {
+            int dv;
+            dv=(a[i]*b[j]+c[i+j-1]);
+            c[i+j]=c[i+j]+(dv/BASE);
+            c[i+j-1]=dv%BASE;
+        }
+    c[0]=a[0]+b[0];
+    while (c[0]>1 && c[c[0]]==0)
+        --c[0];
+}
+
 int main()
 {
     myLongType a,b,c;
@@ -73,8 +89,14 @@ int main()
     printf("B= ");
     readLong(b);
 
-    sumLong(a,b,c);
+    printf("Sum\n");
     printf("C= ");
+    sumLong(a,b,c);
+    writeLong(c);
+
+    printf("Mylti\n");
+    printf("C= ");
+    multiLong(a,b,c);
     writeLong(c);
 
     return 0;
