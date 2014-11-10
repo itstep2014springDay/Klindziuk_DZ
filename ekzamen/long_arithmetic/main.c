@@ -81,20 +81,30 @@ void multiLong(const myLongType a, const myLongType b, myLongType c)
         --c[0];
 }
 
-int moreAB(const myLongType a, const myLongType b)
+int moreAB(const myLongType a, const myLongType b, int shift)
 {
-    if (a[0]<b[0])
-        return 0;
-    if (a[0]>b[0])
-        return 1;
-    int i=a[0];
-    while (i>0 && a[i]==b[i])
-        --i;
-    if (i==0)
-        return 0;
-    if (a[i]>b[i])
-        return 1;
-    return 0;
+    int more;
+    if (a[0]>b[0]+shift)
+        more=0;
+    else if (a[0]<b[0]+shift)
+        more=1;
+    else
+    {
+        int i=a[0];
+        while (i>shift && a[i]==b[i-shift])
+            --i;
+        if (i==shift)
+        {
+            more=0;
+            for (i=1; i<=shift; ++i)
+                if (a[i]>0)
+                    return more;
+            more=2;
+        }
+        else
+            more=(int) (a[i]<b[i-shift]);
+    }
+    return more;
 }
 
 void subLong(const myLongType a, const myLongType b,int sp, myLongType c)
@@ -133,6 +143,32 @@ void swapAB(myLongType a, myLongType b)
         b[i]=temp[i];
 }
 
+void makeDel(const myLongType a, const myLongType b, myLongType quotient, myLongType remainder)
+{
+
+}
+
+void divLongToLong(const myLongType a, const myLongType b, myLongType quotient, myLongType remainder)
+{
+    memset(quotient,0,sizeof(myLongType));
+    quotient[0]=1;
+    memset(remainder,0,sizeof(myLongType));
+    remainder[0]=1;
+    switch (moreAB(a,b,0))
+    {
+    case 0:
+        makeDel(a,b,quotient,remainder);
+        break;
+    case 1:
+        for (int i=0; i<=a[0]; ++i)
+            remainder[i]=a[i];
+        break;
+    case 2:
+        quotient[1]=1;
+        break;
+    }
+}
+
 int main()
 {
     myLongType a,b,c;
@@ -160,7 +196,7 @@ int main()
         writeLong(outputFile,c);
 
         fprintf(outputFile,"A-B= ");
-        if (!moreAB(a,b)) // костыль для вывода отицательных чисел
+        if (moreAB(a,b,0)) // костыль для вывода отицательных чисел
         {
             swapAB(a,b);
             fprintf(outputFile,"-");
@@ -187,7 +223,7 @@ int main()
         writeLong(stdout,c);
 
         fprintf(stdout,"A-B= ");
-        if (!moreAB(a,b)) // костыль для вывода отицательных чисел
+        if (moreAB(a,b,0)) // костыль для вывода отицательных чисел
         {
             swapAB(a,b);
             fprintf(stdout,"-");
