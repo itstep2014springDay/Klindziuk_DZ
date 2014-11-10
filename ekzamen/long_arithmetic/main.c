@@ -145,9 +145,11 @@ int main()
     {
         FILE *inputFile,*outputFile;
         inputFile=fopen("input.txt","r");
-        outputFile=fopen("output.txt","w");
         readLong(inputFile,a);
         readLong(inputFile,b);
+        fclose(inputFile);
+        outputFile=fopen("output.txt","w");
+
         fprintf(outputFile,"A= ");
         writeLong(outputFile,a);
         fprintf(outputFile,"B= ");
@@ -165,12 +167,12 @@ int main()
         }
         subLong(a,b,0,c);
         writeLong(outputFile,c);
+
         fprintf(outputFile,"A*B= ");
         multiLong(a,b,c);
         writeLong(outputFile,c);
 
         fclose(outputFile);
-        fclose(inputFile);
         fprintf(stdout,"Done. See \"output.txt\"\n");
     }
     else // режим работы с консолью в другом случае
@@ -179,10 +181,6 @@ int main()
         readLong(stdin,a);
         fprintf(stdout,"B= ");
         readLong(stdin,b);
-
-        //writeLong(stdout,a);
-
-        //writeLong(stdout,b);
 
         fprintf(stdout,"A+B= ");
         sumLong(a,b,c);
@@ -196,6 +194,7 @@ int main()
         }
         subLong(a,b,0,c);
         writeLong(stdout,c);
+
         fprintf(stdout,"A*B= ");
         multiLong(a,b,c);
         writeLong(stdout,c);
