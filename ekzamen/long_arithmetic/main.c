@@ -43,7 +43,7 @@ void writeLong(FILE *outputFile, const myLongType a)
         }
         fprintf(outputFile,"%s",s);
     }
-    fprintf(outputFile,"\n");
+    //fprintf(outputFile,"\n");
 }
 
 void sumLong(const myLongType a, const myLongType b, myLongType c)
@@ -79,6 +79,25 @@ void multiLong(const myLongType a, const myLongType b, myLongType c)
     c[0]=a[0]+b[0];
     while (c[0]>1 && c[c[0]]==0)
         --c[0];
+}
+
+void multiLongToShort(const myLongType a, const int shortNumber, myLongType c)
+{
+    memset(c,0,sizeof(myLongType));
+    if (shortNumber==0)
+        ++c[0];
+    else
+    {
+        for(int i=1; i<=a[0]; ++i)
+        {
+            c[i+1]=(a[i]*shortNumber+c[i])/BASE;
+            c[i]=(a[i]*shortNumber+c[i])%BASE;
+        }
+        if (c[a[0]+1]>0)
+            c[0]=a[0]+1;
+        else
+            c[0]=a[0];
+    }
 }
 
 int moreAB(const myLongType a, const myLongType b, int shift)
@@ -143,9 +162,66 @@ void swapAB(myLongType a, myLongType b)
         b[i]=temp[i];
 }
 
+int findBin(myLongType remainder,const myLongType b,int shift)
+{
+    myLongType c;
+    int up=BASE,down=0;
+    while (up-1>down)
+    {
+        multiLongToShort(b,(up+down)/2,c);
+        switch (moreAB(remainder,c,shift))
+        {
+        case 0:
+            down=(up+down)/2;
+            break;
+        case 1:
+            up=(up+down)/2;
+            break;
+        case 2:
+            up=(up+down)/2;
+            down=up;
+            break;
+        }
+    }
+    multiLongToShort(b,(up+down)/2,c);
+    if(moreAB(remainder,c,0)==0)
+    {
+        myLongType temp;
+        memset(temp,0,sizeof(myLongType));
+        subLong(remainder,c,shift,temp);
+        for (int i=0; i<=remainder[0]; ++i)
+            remainder[i]=temp[i];
+    }
+    else
+    {
+        myLongType temp;
+        memset(temp,0,sizeof(myLongType));
+        subLong(c,remainder,shift,temp);
+        for (int i=0; i<=c[0]; ++i)
+            c[i]=temp[i];
+        memset(remainder,0,sizeof(myLongType));
+        for (int i=0; i<=c[0]; ++i)
+            remainder[i]=c[i];
+    }
+    return (up+down)/2;
+}
+
 void makeDel(const myLongType a, const myLongType b, myLongType quotient, myLongType remainder)
 {
-
+    //memset(quotient,0,sizeof(myLongType));
+    //memset(remainder,0,sizeof(myLongType));
+    for (int i=0; i<=a[0]; ++i)
+        remainder[i]=a[i];
+    int shift;
+    shift=a[0]-b[0];
+    if(moreAB(a,b,shift)==1)
+        --shift;
+    quotient[0]=shift+1;
+    while (shift>=0)
+    {
+        quotient[shift+1]=findBin(remainder,b,shift);
+        --shift;
+    }
 }
 
 void divLongToLong(const myLongType a, const myLongType b, myLongType quotient, myLongType remainder)
@@ -171,7 +247,7 @@ void divLongToLong(const myLongType a, const myLongType b, myLongType quotient, 
 
 int main()
 {
-    myLongType a,b,c;
+    myLongType a,b,c,quotient,remainder;
     printf("Choise mode\nPress '1' - work with console\nPress '2' - work with files\nMode: ");
     int mode;
     scanf("%d",&mode);
@@ -188,25 +264,38 @@ int main()
 
         fprintf(outputFile,"A= ");
         writeLong(outputFile,a);
+        fprintf(outputFile,"\n");
         fprintf(outputFile,"B= ");
         writeLong(outputFile,b);
+        fprintf(outputFile,"\n");
 
         fprintf(outputFile,"A+B= ");
         sumLong(a,b,c);
         writeLong(outputFile,c);
+        fprintf(outputFile,"\n");
 
         fprintf(outputFile,"A-B= ");
         if (moreAB(a,b,0)) // костыль для вывода отицательных чисел
         {
-            swapAB(a,b);
+            subLong(b,a,0,c);
             fprintf(outputFile,"-");
         }
-        subLong(a,b,0,c);
+        else
+            subLong(a,b,0,c);
         writeLong(outputFile,c);
+        fprintf(outputFile,"\n");
 
         fprintf(outputFile,"A*B= ");
         multiLong(a,b,c);
         writeLong(outputFile,c);
+        fprintf(outputFile,"\n");
+
+        fprintf(outputFile,"A/B= ");
+        divLongToLong(a,b,quotient,remainder);
+        writeLong(outputFile,quotient);
+        fprintf(outputFile," : ");
+        writeLong(outputFile,remainder);
+        fprintf(outputFile,"\n");
 
         fclose(outputFile);
         fprintf(stdout,"Done. See \"output.txt\"\n");
@@ -221,19 +310,30 @@ int main()
         fprintf(stdout,"A+B= ");
         sumLong(a,b,c);
         writeLong(stdout,c);
+        fprintf(stdout,"\n");
 
         fprintf(stdout,"A-B= ");
         if (moreAB(a,b,0)) // костыль для вывода отицательных чисел
         {
-            swapAB(a,b);
+            subLong(b,a,0,c);
             fprintf(stdout,"-");
         }
-        subLong(a,b,0,c);
+        else
+            subLong(a,b,0,c);
         writeLong(stdout,c);
+        fprintf(stdout,"\n");
 
         fprintf(stdout,"A*B= ");
         multiLong(a,b,c);
         writeLong(stdout,c);
+        fprintf(stdout,"\n");
+
+        fprintf(stdout,"A/B= ");
+        divLongToLong(a,b,quotient,remainder);
+        writeLong(stdout,quotient);
+        fprintf(stdout," : ");
+        writeLong(stdout,remainder);
+        fprintf(stdout,"\n");
     }
     return 0;
 }
